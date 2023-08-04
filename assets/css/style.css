@@ -1,0 +1,20 @@
+body {
+    background-color: azure;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#get-scores {
+    font-size: 150%;
+    color:blueviolet;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.timer {
+    font-size:150%;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+}
