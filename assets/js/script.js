@@ -20,4 +20,7 @@ function setTimer() {
     }, 1000);
 }
 
-//setTimer();
+
+
+
+setTimer();

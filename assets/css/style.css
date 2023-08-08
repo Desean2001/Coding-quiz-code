@@ -18,3 +18,11 @@ header {
     color: black;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.window {
+    display: block;
+    width: 90vw;
+    height: 550px;
+    margin: 60px auto;
+    margin-top: 45px;
+}
