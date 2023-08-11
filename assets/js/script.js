@@ -1,6 +1,15 @@
 var timerEl = document.querySelector(".timer");
 var getScoresEl = document.getElementById("get-scores");
+var startButton = document.querySelector(".start-button");
 
+
+function startQuiz(){
+    setTimer();
+
+}
+
+
+startButton.addEventListener("click", startQuiz);
 
 
 function setTimer() {
@@ -23,4 +32,3 @@ function setTimer() {
 
 
 
-setTimer();
