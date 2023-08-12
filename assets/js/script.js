@@ -29,8 +29,9 @@ submitButton.addEventListener("click", checkAnswer);
 
 nextButton.addEventListener("click", nextQ);
 
+var seconds = 75;
+
 function setTimer() {
-    var seconds = 75;
     var timerInterval = setInterval(function() {
         if (seconds > 1) {
             timerEl.textContent = "Time Remaining: " + seconds + " seconds";
@@ -115,6 +116,7 @@ function checkAnswer () {
         document.getElementById("next-button").appendChild(nxtBtn);
         nxtBtn.disabled = false;
         subBtn.disabled = true;
+        seconds = seconds - 10;
     }
 }
 
