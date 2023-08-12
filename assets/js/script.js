@@ -3,21 +3,31 @@ var getScoresEl = document.getElementById("get-scores");
 var startButton = document.querySelector(".start-button");
 var startText = document.getElementById("Start-text");
 var submitButton = document.getElementById("submit-button");
+var cOrW = document.querySelector(".c-or-w");
+var nextButton = document.getElementById("next-button");
 
-var btn = document.createElement("button");
-btn.textContent = "Submit";
+var subBtn = document.createElement("button");
+subBtn.textContent = "Submit";
+
+var nxtBtn = document.createElement("button");
+nxtBtn.textContent = "Next";
+
+
 
 function startQuiz(){
     setTimer();
     document.getElementById("Start-text").remove()
     document.querySelector(".start-button").remove()
     showQuestions();
-    document.getElementById("submit-button").appendChild(btn);
+    document.getElementById("submit-button").appendChild(subBtn);
 }
 
 
 startButton.addEventListener("click", startQuiz);
 
+submitButton.addEventListener("click", checkAnswer);
+
+nextButton.addEventListener("click", nextQ);
 
 function setTimer() {
     var seconds = 75;
@@ -89,6 +99,38 @@ function showQuestions () {
         choicesdiv.appendChild(choice);
         choicesdiv.appendChild(choiceLabel);
         options.appendChild(choicesdiv);
+    }
+}
+
+function checkAnswer () {
+    const pickedOption = parseInt(document.querySelector('input[name="answer"]:checked').value);
+    if (Questions[thisQuestion].answers[pickedOption].isCorrect) {
+        score++;
+        cOrW.textContent = "Correct!"
+        document.getElementById("next-button").appendChild(nxtBtn);
+        nxtBtn.disabled = false;
+        subBtn.disabled = true;
+    } else {
+        cOrW.textContent = "Wrong"
+        document.getElementById("next-button").appendChild(nxtBtn);
+        nxtBtn.disabled = false;
+        subBtn.disabled = true;
+    }
+}
+
+function nextQ () {
+    if (thisQuestion < Questions.length - 1) {
+        thisQuestion++;
+        cOrW.textContent = ""
+        showQuestions();
+        nxtBtn.disabled = true;
+        subBtn.disabled = false;
+    } else {
+        document.querySelector(".question").remove()
+        document.querySelector(".options").remove()
+        document.getElementById("submit-button").remove()
+        document.getElementById("next-button").remove()
+        cOrW.textContent = ""
     }
 }
 
