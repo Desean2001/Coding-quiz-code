@@ -5,6 +5,9 @@ var startText = document.getElementById("Start-text");
 var submitButton = document.getElementById("submit-button");
 var cOrW = document.querySelector(".c-or-w");
 var nextButton = document.getElementById("next-button");
+const question = document.querySelector(".question");
+const options = document.querySelector(".options");
+
 
 var subBtn = document.createElement("button");
 subBtn.textContent = "Submit";
@@ -29,7 +32,7 @@ submitButton.addEventListener("click", checkAnswer);
 
 nextButton.addEventListener("click", nextQ);
 
-var seconds = 75;
+var seconds = 30;
 
 function setTimer() {
     var timerInterval = setInterval(function() {
@@ -40,7 +43,18 @@ function setTimer() {
             timerEl.textContent = "Time Remaining: " + seconds + " second";
             seconds--;
         } else {
-            timerEl.textContent = "Out of Time"
+            timerEl.textContent = "Time Remaining: 0 seconds";
+            clearInterval(timerInterval);
+            question.textContent = "Out of Time";
+            options.textContent = "";
+            submitButton.remove();
+            nextButton.remove();
+            showScore();
+        }
+
+        if (thisQuestion < Questions.length) {
+        } else {
+            timerEl.textContent = "All questions answered"
             clearInterval(timerInterval);
         }
 
@@ -80,9 +94,6 @@ let score = 0
 let thisQuestion = 0
 
 function showQuestions () {
-    const question = document.querySelector(".question");
-    const options = document.querySelector(".options");
-
     question.textContent = Questions[thisQuestion].q;
     options.innerHTML = ""
 
@@ -133,6 +144,13 @@ function nextQ () {
         document.getElementById("submit-button").remove()
         document.getElementById("next-button").remove()
         cOrW.textContent = ""
+        showScore();
     }
+}
+
+function showScore () {
+    var total = document.querySelector(".score");
+    var percent = score / Questions.length * 100;
+    total.textContent = "You got a " + percent +"%!";
 }
 
