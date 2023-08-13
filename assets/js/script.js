@@ -7,6 +7,7 @@ var cOrW = document.querySelector(".c-or-w");
 var nextButton = document.getElementById("next-button");
 const question = document.querySelector(".question");
 const options = document.querySelector(".options");
+var saved = document.querySelector(".save-score");
 
 
 var subBtn = document.createElement("button");
@@ -15,7 +16,7 @@ subBtn.textContent = "Submit";
 var nxtBtn = document.createElement("button");
 nxtBtn.textContent = "Next";
 
-
+saved.hidden = true;
 
 function startQuiz(){
     setTimer();
@@ -25,6 +26,7 @@ function startQuiz(){
     document.getElementById("submit-button").appendChild(subBtn);
 }
 
+highScores = []
 
 startButton.addEventListener("click", startQuiz);
 
@@ -152,5 +154,20 @@ function showScore () {
     var total = document.querySelector(".score");
     var percent = score / Questions.length * 100;
     total.textContent = "You got a " + percent +"%!";
+    saveScore ();
 }
 
+function saveScore () {
+    saved.hidden = false;
+    var firstN = document.getElementById("fname");
+    var lastN = document.getElementById("lname");
+    highScores.push(firstN + " " + lastN + " - " + percent);
+    localStorage.setItem("hs", JSON.stringify(highScores));
+}
+
+function displayScores () {
+    var hs = JSON.parse(localStorage.getItem("hs"));
+    for (i = 0; i < hs.length; i++){
+        document.querySelector(".display-scores").textContent(hs);
+    }
+}
