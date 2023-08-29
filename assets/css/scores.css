@@ -1,0 +1,26 @@
+body {
+    background-color: azure;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 0;
+}
+
+#hScores {
+    display: flex;
+    flex-flow: column;
+    margin: auto;
+    font-size: 150%;
+    color: dimgray;
+}
+
+.top {
+    display: flex;
+}
+
+#topText {
+    margin: auto;
+    color: black;
+    text-decoration: underline;
+    font-size: 300%;
+}

@@ -7,16 +7,12 @@ var cOrW = document.querySelector(".c-or-w");
 var nextButton = document.getElementById("next-button");
 const question = document.querySelector(".question");
 const options = document.querySelector(".options");
-var saved = document.querySelector(".save-score");
-
 
 var subBtn = document.createElement("button");
 subBtn.textContent = "Submit";
 
 var nxtBtn = document.createElement("button");
 nxtBtn.textContent = "Next";
-
-saved.hidden = true;
 
 function startQuiz(){
     setTimer();
@@ -26,8 +22,6 @@ function startQuiz(){
     document.getElementById("submit-button").appendChild(subBtn);
 }
 
-highScores = []
-
 startButton.addEventListener("click", startQuiz);
 
 submitButton.addEventListener("click", checkAnswer);
@@ -36,8 +30,10 @@ nextButton.addEventListener("click", nextQ);
 
 var seconds = 30;
 
+var timerInterval;
+
 function setTimer() {
-    var timerInterval = setInterval(function() {
+    timerInterval = setInterval(function() {
         if (seconds > 1) {
             timerEl.textContent = "Time Remaining: " + seconds + " seconds";
             seconds--;
@@ -141,33 +137,64 @@ function nextQ () {
         nxtBtn.disabled = true;
         subBtn.disabled = false;
     } else {
+        clearInterval(timerInterval);
         document.querySelector(".question").remove()
         document.querySelector(".options").remove()
         document.getElementById("submit-button").remove()
         document.getElementById("next-button").remove()
         cOrW.textContent = ""
-        showScore();
+        showPrompt();
     }
 }
 
-function showScore () {
+function criteriaPrompt(criteria) {
+    return prompt (criteria);
+}
+
+const firstPrompt = "First Name: ";
+const secondPrompt = "Last Name: ";
+
+function fNameP () {
+    let firstN = criteriaPrompt (firstPrompt);
+    if (firstN === "") {
+        fNameP ();
+    } else {
+        return firstN;
+    }
+}
+
+function lNameP () {
+    let lastN = criteriaPrompt (secondPrompt);
+    if (lastN === "") {
+        lNameP ();
+    } else {
+        return lastN;
+    }
+}
+
+var savBtn = document.createElement("button");
+savBtn.textContent = "Save Score";
+
+var saveButton = document.getElementById("save-button");
+
+function showPrompt () {
     var total = document.querySelector(".score");
-    var percent = score / Questions.length * 100;
-    total.textContent = "You got a " + percent +"%!";
-    saveScore ();
+    percent = score / Questions.length * 100;
+    let firstN = fNameP ();
+    let lastN = lNameP ();
+    total.textContent = `${firstN} ${lastN} - ${percent}%`;
+    strText = `${firstN} ${lastN} - ${percent}%`
+    document.getElementById("save-button").appendChild(savBtn);
+    saveButton.addEventListener("click", pushToArr ());
 }
 
-function saveScore () {
-    saved.hidden = false;
-    var firstN = document.getElementById("fname");
-    var lastN = document.getElementById("lname");
-    highScores.push(firstN + " " + lastN + " - " + percent);
-    localStorage.setItem("hs", JSON.stringify(highScores));
-}
+var strText = "";
+var firstN = document.getElementById("fname");
+var lastN = document.getElementById("lname");
+var percent;
 
-function displayScores () {
-    var hs = JSON.parse(localStorage.getItem("hs"));
-    for (i = 0; i < hs.length; i++){
-        document.querySelector(".display-scores").textContent(hs);
-    }
+function pushToArr () {
+    let saveScores = localStorage.getItem("HS");
+    let highScores = (`${saveScores}` + `, ${strText}`);
+    localStorage.setItem("HS", (highScores));
 }
